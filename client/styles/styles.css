@@ -88,3 +88,12 @@ form input[type="text"] {
   color: #fff;
   background-color: #0090da;
 }
+
+#summitButton {
+  margin: 8px;
+  position: absolute;
+}
+
+#summitArea {
+  margin-top: 20px;
+}

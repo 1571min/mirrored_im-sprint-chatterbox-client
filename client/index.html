@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>chatterbox</title>
-    <link rel="stylesheet" href="styles/styles.css" />
-  </head>
-  <body>
-    <div id="main">
-      <h1>chatterbox</h1>
-    </div>
 
-    <!-- #chats 엘리먼트의 id는 바꾸지 마세요 -->
-    <div id="chats">
-      <!-- 자유롭게 HTML을 작성하세요 -->
+<head>
+  <meta charset="utf-8" />
+  <title>chatterbox</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+</head>
+
+<body>
+  <div id="main">
+    <h1>chatterbox</h1>
+    <div>
+      <span id="romeTitle">Room: </span>
+      <select>
+        <option> 박스 1</option>
+        <option> 박스 2</option>
+        <option> 박스 3</option>
+        <option> 박스 4</option>
+      </select>
     </div>
-    <select>
-      <option> 박스 1</option>
-      <option> 박스 2</option>
-      <option> 박스 3</option>
-      <option> 박스 4</option>
-    </select>
-    <button>summit</button>
-    <input></input>
-    <script src="scripts/app.js"></script>
-  </body>
+    <div id="summitArea">
+      <textarea id="userInput" rows="2" cols="80"></textarea>
+      <button id="summitButton">summit</button>
+    </div>
+  </div>
+
+  <!-- #chats 엘리먼트의 id는 바꾸지 마세요 -->
+  <div id="chats">
+    <!-- 자유롭게 HTML을 작성하세요 -->
+  </div>
+
+  <script src="scripts/app.js"></script>
+</body>
+
 </html>
