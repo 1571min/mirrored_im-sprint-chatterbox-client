@@ -28,14 +28,13 @@ const app = {
       });
   },
   send: function (message) {
-    window
-      .fetch(app.server, {
-        method: 'POST',
-        body: JSON.stringify(message),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+    fetch(app.server, {
+      method: 'POST',
+      body: JSON.stringify(message),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then((response) => {
         return response.json();
       })
@@ -65,12 +64,13 @@ const app = {
 let summitButton = document.querySelector('#summitButton');
 summitButton.addEventListener('click', function () {
   let textarea = document.querySelector('#userInput');
-  console.log(textarea);
-  console.log(textarea.value);
+  let idArea = document.querySelector('#idInput');
+  let roomnameArea = document.querySelector('#roomNameInput');
+
   const message = {
-    username: '김코딩',
-    text: textarea.value,
-    roomname: '로비',
+    username: idArea.value ? idArea.value : '김코딩',
+    text: textarea.value ? textarea.value : '기본 메세지',
+    roomname: roomnameArea.value ? roomnameArea.value : '로비',
   };
   // x
   //로딩 이미지 보이기
@@ -78,7 +78,11 @@ summitButton.addEventListener('click', function () {
   setTimeout(() => {
     app.renderMessage(message); //메세지 출력
     app.send(message); //서버에 메세지 전송
-    app.fetch(); //
+    app.fetch().then((res) => {
+      for (let i = 0; i < res.length; i++) {
+        app.renderMessage(res[i]);
+      }
+    });
 
     document.querySelector('.spinner').style.display = 'none';
     //로딩 이미지 지우기
@@ -87,7 +91,6 @@ summitButton.addEventListener('click', function () {
 
 let roomSelector = document.querySelector('#roomselector');
 roomSelector.addEventListener('change', (event) => {
-  console.log(event);
   app.clearMessages();
   app.fetch().then((res) => {
     for (let i = 0; i < res.length; i++) {
@@ -97,5 +100,15 @@ roomSelector.addEventListener('change', (event) => {
     }
   });
 });
+setInterval(() => {
+  app.clearMessages();
 
+  app.fetch().then((res) => {
+    //ToDo : 이미있는 데이터는 유지한 상태에서 업데이트 구현
+    for (let i = 0; i < res.length; i++) {
+      app.renderMessage(res[i]);
+    }
+  });
+  console.log('call setInterval');
+}, 3000);
 app.init();
