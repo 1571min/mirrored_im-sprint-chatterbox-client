@@ -81,6 +81,16 @@ let roomSelector = document.querySelector('#roomselector');
 roomSelector.addEventListener('change', (event) => {
   console.log(event);
   app.clearMessages();
-});
+  app.fetch().then((res) => {
+    for(let i = 0; i < res.length; i++) {
+      if(event.target.value === res[i].roomname) {
+        app.renderMessage(res[i]);
+      }
+    }
+  })
+}
+)
+
 
 app.init();
+
