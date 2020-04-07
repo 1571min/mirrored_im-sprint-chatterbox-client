@@ -72,9 +72,17 @@ summitButton.addEventListener('click', function () {
     text: textarea.value,
     roomname: '로비',
   };
-  app.renderMessage(message);
-  app.send(message);
-  app.fetch();
+  // x
+  //로딩 이미지 보이기
+  document.querySelector('.spinner').style.display = 'inline-block';
+  setTimeout(() => {
+    app.renderMessage(message); //메세지 출력
+    app.send(message); //서버에 메세지 전송
+    app.fetch(); //
+
+    document.querySelector('.spinner').style.display = 'none';
+    //로딩 이미지 지우기
+  }, 500);
 });
 
 let roomSelector = document.querySelector('#roomselector');
@@ -82,15 +90,12 @@ roomSelector.addEventListener('change', (event) => {
   console.log(event);
   app.clearMessages();
   app.fetch().then((res) => {
-    for(let i = 0; i < res.length; i++) {
-      if(event.target.value === res[i].roomname) {
+    for (let i = 0; i < res.length; i++) {
+      if (event.target.value === res[i].roomname) {
         app.renderMessage(res[i]);
       }
     }
-  })
-}
-)
-
+  });
+});
 
 app.init();
-
