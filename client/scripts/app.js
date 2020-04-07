@@ -30,7 +30,7 @@ const app = {
     let newElement = document.createElement('div');
     let newUsername = document.createElement('div');
     let newText = document.createElement('div');
-    newUsername.className = 'userID';
+    newUsername.className = 'username';
     newText.className = 'userText';
     newUsername.textContent = message.username + ':';
     newText.textContent = message.text;
@@ -39,6 +39,9 @@ const app = {
     document.querySelector("#chats").appendChild(newElement);
   }
 };
-
-
+let result;
+fetch(app.server).then(res => res.json()).then(res => {
+  result = res;
+  return result;
+})
 
