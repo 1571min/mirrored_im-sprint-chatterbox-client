@@ -75,15 +75,18 @@ summitButton.addEventListener('click', function () {
   // x
   //로딩 이미지 보이기
   document.querySelector('.spinner').style.display = 'inline-block';
+  app.send(message); //서버에 메세지 전송
   setTimeout(() => {
-    app.renderMessage(message); //메세지 출력
-    app.send(message); //서버에 메세지 전송
+    // app.renderMessage(message); //메세지 출력
     app.fetch().then((res) => {
-      for (let i = 0; i < res.length; i++) {
-        app.renderMessage(res[i]);
+      //ToDo : 이미있는 데이터는 유지한 상태에서 업데이트 구현
+      let roomname = document.querySelector('#roomselector').value;
+      let filteredChats = res.filter((ele) => ele.roomname === roomname);
+      let chatsLength = document.querySelectorAll('.chat').length;
+      for (let i = chatsLength; i < filteredChats.length; i++) {
+        app.renderMessage(filteredChats[i]);
       }
     });
-
     document.querySelector('.spinner').style.display = 'none';
     //로딩 이미지 지우기
   }, 500);
@@ -101,12 +104,12 @@ roomSelector.addEventListener('change', (event) => {
   });
 });
 setInterval(() => {
-  app.clearMessages();
-
   app.fetch().then((res) => {
-    //ToDo : 이미있는 데이터는 유지한 상태에서 업데이트 구현
-    for (let i = 0; i < res.length; i++) {
-      app.renderMessage(res[i]);
+    let roomname = document.querySelector('#roomselector').value;
+    let filteredChats = res.filter((ele) => ele.roomname === roomname);
+    let chatsLength = document.querySelectorAll('.chat').length;
+    for (let i = chatsLength; i < filteredChats.length; i++) {
+      app.renderMessage(filteredChats[i]);
     }
   });
   console.log('call setInterval');
